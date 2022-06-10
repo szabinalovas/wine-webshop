@@ -19,7 +19,8 @@ public class PaymentService {
         this.paymentMapper = paymentMapper;
     }
 
-    public PaymentDto addPayment(Payment payment) {
+    public PaymentDto addPayment(PaymentDto paymentDto) {
+        Payment payment = paymentMapper.toEntity(paymentDto);
         return paymentMapper.toDto(paymentRepository.save(payment));
     }
 

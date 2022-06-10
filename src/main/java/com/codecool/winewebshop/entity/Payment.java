@@ -20,7 +20,11 @@ public class Payment {
     private Long id;
     @OneToOne(mappedBy = "payment")
     private Cart cart;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_type")
     private PaymentType paymentType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
     private LocalDateTime paymentDate;
 }
