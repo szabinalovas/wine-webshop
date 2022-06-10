@@ -1,6 +1,6 @@
 package com.codecool.winewebshop.dto;
 
-import com.codecool.winewebshop.entity.Payment;
+import com.codecool.winewebshop.entity.Customer;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -9,14 +9,14 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface PaymentMapper {
+public interface CustomerMapper {
 
-    PaymentDto toDto(Payment payment);
+    CustomerDto toDto(Customer customer);
 
-    Payment toEntity(PaymentDto paymentDto);
+    Customer toEntity(CustomerDto customerDto);
 
-    List<PaymentDto> toDto(List<Payment> payments);
+    List<CustomerDto> toDto(List<Customer> customers);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updatePaymentFromDto(PaymentDto paymentDto, @MappingTarget Payment payment);
+    void updateCustomerFromDto(CustomerDto customerDto, @MappingTarget Customer customer);
 }

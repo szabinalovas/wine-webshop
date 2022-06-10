@@ -18,6 +18,6 @@ public interface ProductMapper {
     List<ProductDto> toDto(List<Product> products);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateProductFromDto(ProductDto dto, @MappingTarget Product product);
+    void updateProductFromDto(ProductDto productDto, @MappingTarget Product product);
 
 }

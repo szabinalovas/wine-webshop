@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ProductDto {
+
     private Long id;
     private String productName;
     private String productDescription;
@@ -22,6 +23,4 @@ public class ProductDto {
     private int quantityInStock;
     private Category category;
     private List<Cart> carts;
-
-
 }
