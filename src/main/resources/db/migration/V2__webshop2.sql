@@ -1,0 +1,1 @@
+insert into product (price, product_description, product_name, quantity_in_stock) values (234, 'jldfkghdfg', 'nfjkdshd', 34);
