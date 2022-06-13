@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -19,7 +18,6 @@ public class CartDto {
 
     private Long id;
     private int total;
-    private LocalDateTime date;
     private Customer customer;
     private List<Product> products;
     private Payment payment;

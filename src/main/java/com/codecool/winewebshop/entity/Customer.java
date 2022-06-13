@@ -1,5 +1,7 @@
 package com.codecool.winewebshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "customerName")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +23,9 @@ public class Customer {
     private String postalCode;
     private String city;
     private String address;
-    private String telephoneNumber;
+    private String phone;
     private String email;
     private String creditCardNumber;
-    private String creditCardHolder;
     private String creditCardExpiryDate;
     @OneToOne(mappedBy = "customer")
     private Cart cart;

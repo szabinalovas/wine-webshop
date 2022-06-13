@@ -18,6 +18,7 @@ public class ProductDto {
 
     private Long id;
     private String productName;
+    private int vintage;
     private String productDescription;
     private int price;
     private int quantityInStock;

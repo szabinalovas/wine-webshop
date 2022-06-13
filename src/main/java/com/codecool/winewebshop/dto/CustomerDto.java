@@ -18,10 +18,9 @@ public class CustomerDto {
     private String postalCode;
     private String city;
     private String address;
-    private String telephoneNumber;
+    private String phone;
     private String email;
     private String creditCardNumber;
-    private String creditCardHolder;
     private String creditCardExpiryDate;
     private Cart cart;
 }

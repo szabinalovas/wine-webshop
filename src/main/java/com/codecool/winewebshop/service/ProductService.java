@@ -41,4 +41,7 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    public List<ProductDto> getProductByCategoryId(Long id) {
+        return productMapper.toDto(productRepository.findProductByCategory(id));
+    }
 }
