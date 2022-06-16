@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class PaymentDto {
 
     private Long id;
-    private Cart cart;
+    private CartDto cart;
     private PaymentType paymentType;
     private PaymentStatus paymentStatus;
     private LocalDate paymentDate;

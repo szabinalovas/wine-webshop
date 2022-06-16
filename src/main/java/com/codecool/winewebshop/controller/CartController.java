@@ -4,8 +4,6 @@ import com.codecool.winewebshop.dto.CartDto;
 import com.codecool.winewebshop.service.CartService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/cart")
 public class CartController {
@@ -16,28 +14,32 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @PostMapping
-    public CartDto addCart(@RequestBody CartDto cartDto) {
-        return cartService.addCart(cartDto);
+    @PostMapping("/{customer_id}/{product_id}")
+    public CartDto addToCart(@PathVariable("customer_id") Long customerId,
+                             @PathVariable("product_id") Long productId) {
+        return cartService.addToCart(customerId, productId);
     }
 
-    @GetMapping
-    public List<CartDto> findAllCart() {
-        return cartService.findAllCart();
+    @GetMapping("/{customer_id}")
+    public CartDto findCartByCustomerId(@PathVariable("customer_id") Long customerId) {
+        return cartService.findByCustomer(customerId);
     }
 
-    @GetMapping("/{id}")
-    public CartDto findCartById(@PathVariable("id") Long id) {
-        return cartService.findCartById(id);
+    @PutMapping("/{customer_id}/{product_id}")
+    public CartDto updateCart(@PathVariable("customer_id") Long customerId,
+                              @PathVariable("product_id") Long productId) {
+        return cartService.updateCart(customerId, productId);
     }
 
-    @PutMapping("/{id}")
-    public CartDto updateCart(@PathVariable("id") Long id, @RequestBody CartDto cartDto) {
-        return cartService.updateCart(id, cartDto);
+    @DeleteMapping("/{customer_id}")
+    public void deleteByCustomer(@PathVariable("customer_id") Long customerId) {
+        cartService.deleteByCustomer(customerId);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteCartById(@PathVariable("id") Long id) {
-        cartService.deleteCartById(id);
+    @DeleteMapping("/{customer_id}/{product_id}")
+    public void deleteProductFromCustomerCart(@PathVariable("customer_id") Long customerId,
+                                              @PathVariable("product_id") Long productId) {
+        cartService.deleteProductFromCustomerCart(customerId, productId);
     }
+
 }

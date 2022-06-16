@@ -1,14 +1,12 @@
 package com.codecool.winewebshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -28,15 +26,4 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    @ManyToMany
-    @JoinTable(
-            name = "product_cart",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "cart_id"),
-            foreignKey = @ForeignKey(name = "fk_cart_product"),
-            inverseForeignKey = @ForeignKey(name = "fk_product_cart"))
-    @JsonIdentityReference(alwaysAsId = true)
-    private List<Cart> carts;
-
-
 }

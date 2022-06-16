@@ -29,7 +29,7 @@ public class CustomerService {
         return customerMapper.toDto(customerRepository.findAll());
     }
 
-    public CustomerDto findCustomerById(Long id) {
+    public CustomerDto findCustomerDtoById(Long id) {
         return customerMapper.toDto(customerRepository.findById(id).get());
     }
 
@@ -42,4 +42,9 @@ public class CustomerService {
     public void deleteCustomerById(Long id) {
         customerRepository.deleteById(id);
     }
+
+    public Customer findCustomerById(Long customerId){
+        return customerRepository.findById(customerId).get();
+    }
+
 }

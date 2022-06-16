@@ -1,11 +1,12 @@
 package com.codecool.winewebshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,8 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "total")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "total")
 public class Cart {
 
     @Id
@@ -28,8 +28,9 @@ public class Cart {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @ManyToMany(mappedBy = "carts")
-    @JsonIdentityReference(alwaysAsId = true)
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    // @JsonIdentityReference(alwaysAsId = true)
     private List<Product> products;
 
     @OneToOne
