@@ -17,5 +17,5 @@ public class CartDto {
     private int total;
     private CustomerDto customer;
     private List<ProductDto> products;
-    private PaymentDtoToCart payment;
+    private PaymentDto payment;
 }

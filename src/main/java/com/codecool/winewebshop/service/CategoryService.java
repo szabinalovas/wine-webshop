@@ -29,11 +29,14 @@ public class CategoryService {
     }
 
     public CategoryDto findCategoryById(Long id) {
-        return categoryMapper.toDto(categoryRepository.findById(id).get());
+        return categoryMapper.toDto(categoryRepository.findById(id).orElseThrow());
+    }
+    public Category findById(Long id) {
+        return categoryRepository.findById(id).orElseThrow();
     }
 
     public CategoryDto updateCategory(Long id, CategoryDto categoryDto) {
-        Category category = categoryRepository.findById(id).get();
+        Category category = categoryRepository.findById(id).orElseThrow();
         categoryMapper.updateCategoryFromDto(categoryDto, category);
         return categoryMapper.toDto(categoryRepository.save(category));
     }
@@ -41,4 +44,5 @@ public class CategoryService {
     public void deleteCategoryById(Long id) {
         categoryRepository.deleteById(id);
     }
+
 }

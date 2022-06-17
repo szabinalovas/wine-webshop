@@ -16,11 +16,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping
-    public ProductDto addProduct(@RequestBody ProductDto productDto) {
-        return productService.addProduct(productDto);
-    }
-
     @GetMapping
     public List<ProductDto> findAllProducts() {
         return productService.findAllProducts();
@@ -31,6 +26,16 @@ public class ProductController {
         return productService.findProductById(id);
     }
 
+    @GetMapping("/category/{category_id}")
+    public List<ProductDto> getProductByCategoryId(@PathVariable("category_id") Long categoryId) {
+        return productService.getProductByCategoryId(categoryId);
+    }
+
+    @PostMapping
+    public ProductDto addProduct(@RequestBody ProductDto productDto) {
+        return productService.addProduct(productDto);
+    }
+
     @PutMapping("/{id}")
     public ProductDto updateProduct(@PathVariable("id") Long id, @RequestBody ProductDto productDto) {
         return productService.updateProduct(id, productDto);
@@ -39,11 +44,6 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProductById(@PathVariable("id") Long id) {
         productService.deleteProductById(id);
-    }
-
-    @GetMapping("/category/{category_id}")
-    public List<ProductDto> getProductByCategoryId(@PathVariable Long category_id){
-        return productService.getProductByCategoryId(category_id);
     }
 }
 

@@ -22,18 +22,7 @@ public class CartController {
 
     @GetMapping("/{customer_id}")
     public CartDto findCartByCustomerId(@PathVariable("customer_id") Long customerId) {
-        return cartService.findByCustomer(customerId);
-    }
-
-    @PutMapping("/{customer_id}/{product_id}")
-    public CartDto updateCart(@PathVariable("customer_id") Long customerId,
-                              @PathVariable("product_id") Long productId) {
-        return cartService.updateCart(customerId, productId);
-    }
-
-    @DeleteMapping("/{customer_id}")
-    public void deleteByCustomer(@PathVariable("customer_id") Long customerId) {
-        cartService.deleteByCustomer(customerId);
+        return cartService.findDtoByCustomer(customerId);
     }
 
     @DeleteMapping("/{customer_id}/{product_id}")
@@ -42,4 +31,8 @@ public class CartController {
         cartService.deleteProductFromCustomerCart(customerId, productId);
     }
 
+    @DeleteMapping("/{customer_id}")
+    public void deleteByCustomer(@PathVariable("customer_id") Long customerId) {
+        cartService.deleteByCustomer(customerId);
+    }
 }

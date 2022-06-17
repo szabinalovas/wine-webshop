@@ -1,7 +1,5 @@
 package com.codecool.winewebshop.dto;
 
-
-import com.codecool.winewebshop.entity.Category;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,10 +13,10 @@ public class ProductDto {
 
     private Long id;
     private String productName;
-    private int vintage;
+    private Integer vintage;
     private String productDescription;
-    private int price;
-    private int quantityInStock;
+    private Integer price;
+    private Integer quantityInStock;
     private CategoryDto category;
 
 }

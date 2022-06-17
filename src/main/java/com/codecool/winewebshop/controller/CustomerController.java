@@ -10,15 +10,10 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
 
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
-    }
-
-    @PostMapping
-    public CustomerDto addCustomer(@RequestBody CustomerDto customerDto) {
-        return customerService.addCustomer(customerDto);
     }
 
     @GetMapping
@@ -29,6 +24,11 @@ public class CustomerController {
     @GetMapping("/{id}")
     public CustomerDto findCustomerById(@PathVariable("id") Long id) {
         return customerService.findCustomerDtoById(id);
+    }
+
+    @PostMapping
+    public CustomerDto addCustomer(@RequestBody CustomerDto customerDto) {
+        return customerService.addCustomer(customerDto);
     }
 
     @PutMapping("/{id}")

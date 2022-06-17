@@ -4,8 +4,6 @@ import com.codecool.winewebshop.dto.PaymentDto;
 import com.codecool.winewebshop.service.PaymentService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/payments")
 public class PaymentController {
@@ -16,28 +14,23 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @PostMapping
-    public PaymentDto addPayment(@RequestBody PaymentDto paymentDto) {
-        return paymentService.addPayment(paymentDto);
+    @PostMapping("/{cart_id}")
+    public PaymentDto addPayment(@PathVariable("cart_id") Long cartId, @RequestBody PaymentDto paymentDto) {
+        return paymentService.addPayment(cartId, paymentDto);
     }
 
-    @GetMapping
-    public List<PaymentDto> findAllPayment() {
-        return paymentService.findAllPayment();
+    @GetMapping("/status/{cart_id}")
+    public PaymentDto findPaymentByCartId(@PathVariable("cart_id") Long cartId) {
+        return paymentService.findPaymentByCartId(cartId);
     }
 
-    @GetMapping("/{id}")
-    public PaymentDto findPaymentById(@PathVariable("id") Long id) {
-        return paymentService.findPaymentById(id);
+    @PutMapping("/{cart_id}")
+    public PaymentDto updatePayment(@PathVariable("cart_id") Long cartId, @RequestBody PaymentDto paymentDto) {
+        return paymentService.updatePayment(cartId, paymentDto);
     }
 
-    @PutMapping("/{id}")
-    public PaymentDto updatePayment(@PathVariable("id") Long id, @RequestBody PaymentDto paymentDto) {
-        return paymentService.updatePayment(id, paymentDto);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deletePaymentById(@PathVariable("id") Long id) {
-        paymentService.deletePaymentById(id);
+    @DeleteMapping("/{cart_id}")
+    public void deletePaymentById(@PathVariable("cart_id") Long cartId) {
+        paymentService.deletePaymentByCartId(cartId);
     }
 }

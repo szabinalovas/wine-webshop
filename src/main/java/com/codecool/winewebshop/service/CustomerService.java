@@ -19,22 +19,26 @@ public class CustomerService {
         this.customerMapper = customerMapper;
     }
 
+    public List<CustomerDto> findAllCustomer() {
+        return customerMapper.toDto(customerRepository.findAll());
+    }
+
+    public CustomerDto findCustomerDtoById(Long id) {
+        return customerMapper.toDto(customerRepository.findById(id).orElseThrow());
+    }
+
+    public Customer findCustomerById(Long customerId) {
+        return customerRepository.findById(customerId).orElseThrow();
+    }
+
     public CustomerDto addCustomer(CustomerDto customerDto) {
         Customer customer = customerMapper.toEntity(customerDto);
 
         return customerMapper.toDto(customerRepository.save(customer));
     }
 
-    public List<CustomerDto> findAllCustomer() {
-        return customerMapper.toDto(customerRepository.findAll());
-    }
-
-    public CustomerDto findCustomerDtoById(Long id) {
-        return customerMapper.toDto(customerRepository.findById(id).get());
-    }
-
     public CustomerDto updateCustomer(Long id, CustomerDto customerDto) {
-        Customer customer = customerRepository.findById(id).get();
+        Customer customer = customerRepository.findById(id).orElseThrow();
         customerMapper.updateCustomerFromDto(customerDto, customer);
         return customerMapper.toDto(customerRepository.save(customer));
     }
@@ -42,9 +46,4 @@ public class CustomerService {
     public void deleteCustomerById(Long id) {
         customerRepository.deleteById(id);
     }
-
-    public Customer findCustomerById(Long customerId){
-        return customerRepository.findById(customerId).get();
-    }
-
 }

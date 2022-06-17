@@ -1,6 +1,5 @@
 package com.codecool.winewebshop.dto;
 
-import com.codecool.winewebshop.entity.Cart;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.AllArgsConstructor;
 import lombok.Data;
