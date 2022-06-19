@@ -24,11 +24,11 @@ public class CustomerService {
     }
 
     public CustomerDto findCustomerDtoById(Long id) {
-        return customerMapper.toDto(customerRepository.findById(id).orElseThrow());
+        return customerMapper.toDto(customerRepository.findById(id).orElse(null));
     }
 
     public Customer findCustomerById(Long customerId) {
-        return customerRepository.findById(customerId).orElseThrow();
+        return customerRepository.findById(customerId).orElse(null);
     }
 
     public CustomerDto addCustomer(CustomerDto customerDto) {
@@ -38,7 +38,10 @@ public class CustomerService {
     }
 
     public CustomerDto updateCustomer(Long id, CustomerDto customerDto) {
-        Customer customer = customerRepository.findById(id).orElseThrow();
+        Customer customer = findCustomerById(id);
+        if (customer == null) {
+            return null;
+        }
         customerMapper.updateCustomerFromDto(customerDto, customer);
         return customerMapper.toDto(customerRepository.save(customer));
     }

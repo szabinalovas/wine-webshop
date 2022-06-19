@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
 @Data
@@ -17,6 +19,8 @@ import java.time.LocalDate;
 public class PaymentDto {
 
     private Long id;
+    @NotEmpty
+    @NotBlank
     private PaymentType paymentType;
     private PaymentStatus paymentStatus;
     private LocalDate paymentDate;

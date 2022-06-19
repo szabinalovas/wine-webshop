@@ -2,7 +2,12 @@ package com.codecool.winewebshop.controller;
 
 import com.codecool.winewebshop.dto.PaymentDto;
 import com.codecool.winewebshop.service.PaymentService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/payments")
@@ -15,22 +20,41 @@ public class PaymentController {
     }
 
     @PostMapping("/{cart_id}")
-    public PaymentDto addPayment(@PathVariable("cart_id") Long cartId, @RequestBody PaymentDto paymentDto) {
-        return paymentService.addPayment(cartId, paymentDto);
+    public ResponseEntity<PaymentDto> addPayment(@PathVariable("cart_id") Long cartId,
+                                                 @Valid @RequestBody PaymentDto paymentDto,
+                                                 BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return new ResponseEntity<>(paymentService.addPayment(cartId, paymentDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/status/{cart_id}")
-    public PaymentDto findPaymentByCartId(@PathVariable("cart_id") Long cartId) {
-        return paymentService.findPaymentByCartId(cartId);
+    public ResponseEntity<PaymentDto> findPaymentByCartId(@PathVariable("cart_id") Long cartId) {
+        PaymentDto payment = paymentService.findPaymentByCartId(cartId);
+        if (payment == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(payment);
     }
 
     @PutMapping("/{cart_id}")
-    public PaymentDto updatePayment(@PathVariable("cart_id") Long cartId, @RequestBody PaymentDto paymentDto) {
-        return paymentService.updatePayment(cartId, paymentDto);
+    public ResponseEntity<PaymentDto> updatePayment(@PathVariable("cart_id") Long cartId,
+                                                    @Valid @RequestBody PaymentDto paymentDto,
+                                                    BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().build();
+        }
+        PaymentDto payment = paymentService.updatePayment(cartId, paymentDto);
+        if (payment == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(payment);
     }
 
     @DeleteMapping("/{cart_id}")
-    public void deletePaymentById(@PathVariable("cart_id") Long cartId) {
+    public ResponseEntity<Void> deletePaymentById(@PathVariable("cart_id") Long cartId) {
         paymentService.deletePaymentByCartId(cartId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

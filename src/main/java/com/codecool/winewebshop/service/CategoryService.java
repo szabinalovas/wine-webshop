@@ -29,14 +29,18 @@ public class CategoryService {
     }
 
     public CategoryDto findCategoryById(Long id) {
-        return categoryMapper.toDto(categoryRepository.findById(id).orElseThrow());
+        return categoryMapper.toDto(categoryRepository.findById(id).orElse(null));
     }
+
     public Category findById(Long id) {
-        return categoryRepository.findById(id).orElseThrow();
+        return categoryRepository.findById(id).orElse(null);
     }
 
     public CategoryDto updateCategory(Long id, CategoryDto categoryDto) {
-        Category category = categoryRepository.findById(id).orElseThrow();
+        Category category = categoryRepository.findById(id).orElse(null);
+        if (category == null) {
+            return null;
+        }
         categoryMapper.updateCategoryFromDto(categoryDto, category);
         return categoryMapper.toDto(categoryRepository.save(category));
     }
