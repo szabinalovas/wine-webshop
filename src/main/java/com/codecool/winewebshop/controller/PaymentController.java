@@ -3,6 +3,7 @@ package com.codecool.winewebshop.controller;
 import com.codecool.winewebshop.dto.PaymentDto;
 import com.codecool.winewebshop.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -68,7 +69,12 @@ public class PaymentController {
 
     @DeleteMapping("/{cart_id}")
     public ResponseEntity<Void> deletePaymentById(@PathVariable("cart_id") Long cartId) {
-        paymentService.deletePaymentByCartId(cartId);
+        try {
+            paymentService.deletePaymentByCartId(cartId);
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Payment with id: " + cartId + " not found.");
+            return ResponseEntity.notFound().build();
+        }
         log.info("Payment with cartId: " + cartId + " was deleted.");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

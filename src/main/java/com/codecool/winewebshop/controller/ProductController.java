@@ -3,6 +3,7 @@ package com.codecool.winewebshop.controller;
 import com.codecool.winewebshop.dto.ProductDto;
 import com.codecool.winewebshop.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -83,7 +84,12 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProductById(@PathVariable("id") Long id) {
-        productService.deleteProductById(id);
+        try {
+            productService.deleteProductById(id);
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Product with id: " + id + " not found.");
+            return ResponseEntity.notFound().build();
+        }
         log.info("Product with id: " + id + " was deleted.");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -10,7 +10,10 @@ import com.codecool.winewebshop.repository.CartRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class CartService {
@@ -33,25 +36,36 @@ public class CartService {
         Customer customer = customerService.findCustomerById(customerId);
         Cart cart = customer.getCart() == null ? new Cart() : customer.getCart();
         Product product = productMapper.toEntity(productService.findProductById(productId));
-        cart.setCustomer(customer);
-        if (cart.getProducts() != null && !cart.getProducts().isEmpty()) {
-            cart.getProducts().add(product);
-        } else {
-            cart.setProducts(List.of(product));
-        }
-        cart.setTotal(cart.getTotal() + product.getPrice());
         product.setQuantityInStock(product.getQuantityInStock() - 1);
+        cart.setCustomer(customer);
+        List<Product> products;
+        if (cart.getProducts() != null && !cart.getProducts().isEmpty()) {
+            products = cart.getProducts();
+        } else {
+            products = new ArrayList<>();
+        }
+        products.add(product);
+        cart.setProducts(products);
+        cart.setTotal(cart.getTotal() + product.getPrice());
         return cartMapper.toDto(cartRepository.save(cart));
     }
 
     public CartDto findDtoByCustomer(Long customerId) {
         Customer customer = customerService.findCustomerById(customerId);
-        return cartMapper.toDto(cartRepository.findByCustomer(customer));
+        Optional<Cart> cart = cartRepository.findByCustomer(customer);
+        if (cart.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        return cartMapper.toDto(cart.get());
     }
 
     public Cart findByCustomer(Long customerId) {
         Customer customer = customerService.findCustomerById(customerId);
-        return cartRepository.findByCustomer(customer);
+        Optional<Cart> cart = cartRepository.findByCustomer(customer);
+        if (cart.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        return cart.get();
     }
 
     public Cart findById(Long id) {

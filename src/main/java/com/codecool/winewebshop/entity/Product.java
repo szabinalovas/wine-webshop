@@ -30,5 +30,11 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
     @ManyToMany
+    @JoinTable(
+            name = "product_cart",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "cart_id"),
+            foreignKey = @ForeignKey(name = "fk_cart_product"),
+            inverseForeignKey = @ForeignKey(name = "fk_product_cart"))
     private List<Cart> carts;
 }

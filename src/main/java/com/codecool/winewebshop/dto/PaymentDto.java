@@ -1,5 +1,6 @@
 package com.codecool.winewebshop.dto;
 
+import com.codecool.winewebshop.entity.paymentEnums.EnumNamePattern;
 import com.codecool.winewebshop.entity.paymentEnums.PaymentStatus;
 import com.codecool.winewebshop.entity.paymentEnums.PaymentType;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -19,8 +20,7 @@ import java.time.LocalDate;
 public class PaymentDto {
 
     private Long id;
-    @NotEmpty
-    @NotBlank
+    @EnumNamePattern(regexp = "CASH_ON_DELIVERY|CARD_PAYMENT|APPLE_PAY|GOOGLE_PAY")
     private PaymentType paymentType;
     private PaymentStatus paymentStatus;
     private LocalDate paymentDate;

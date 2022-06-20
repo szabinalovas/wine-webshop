@@ -1,0 +1,11 @@
+drop table if exists cart_products CASCADE;
+create table product_cart (product_id bigint not null, cart_id bigint not null);
+alter table product_cart add constraint fk_product_cart foreign key (cart_id) references cart;
+alter table product_cart add constraint fk_cart_product foreign key (product_id) references product;
+insert into product_cart (product_id, cart_id) values (5, 1);
+insert into product_cart (product_id, cart_id) values (10, 1);
+insert into product_cart (product_id, cart_id) values (11, 4);
+insert into product_cart (product_id, cart_id) values (3, 4);
+insert into product_cart (product_id, cart_id) values (9, 3);
+insert into product_cart (product_id, cart_id) values (1, 2);
+insert into product_cart (product_id, cart_id) values (4, 2);

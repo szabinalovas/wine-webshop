@@ -3,6 +3,7 @@ package com.codecool.winewebshop.controller;
 import com.codecool.winewebshop.dto.CategoryDto;
 import com.codecool.winewebshop.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -73,7 +74,12 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategoryById(@PathVariable("id") Long id) {
-        categoryService.deleteCategoryById(id);
+        try {
+            categoryService.deleteCategoryById(id);
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Category with id: " + id + " not found.");
+            return ResponseEntity.notFound().build();
+        }
         log.info("Category with id: " + id + " was deleted.");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

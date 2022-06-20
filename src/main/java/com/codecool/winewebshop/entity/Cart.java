@@ -25,7 +25,7 @@ public class Cart {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "carts")
     private List<Product> products;
 
     @OneToOne

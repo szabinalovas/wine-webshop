@@ -3,6 +3,7 @@ package com.codecool.winewebshop.controller;
 import com.codecool.winewebshop.dto.CartDto;
 import com.codecool.winewebshop.service.CartService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class CartController {
         try {
             cart = cartService.findDtoByCustomer(customerId);
         } catch (NoSuchElementException e) {
-            log.error("Customer with id: " + customerId + " not found.");
+            log.error("Customer with id: " + customerId + " has no cart.");
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(cart);
@@ -55,7 +56,12 @@ public class CartController {
 
     @DeleteMapping("/{customer_id}")
     public ResponseEntity<Void> deleteByCustomer(@PathVariable("customer_id") Long customerId) {
-        cartService.deleteByCustomer(customerId);
+        try {
+            cartService.deleteByCustomer(customerId);
+        } catch (EmptyResultDataAccessException e) {
+            log.error("Customer cart with id: " + customerId + " not found.");
+            return ResponseEntity.notFound().build();
+        }
         log.info("Customers cart was deleted.");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
