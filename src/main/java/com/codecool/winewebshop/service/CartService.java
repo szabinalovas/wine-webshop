@@ -46,9 +46,6 @@ public class CartService {
 
     public CartDto findDtoByCustomer(Long customerId) {
         Customer customer = customerService.findCustomerById(customerId);
-        if (customer == null) {
-            return null;
-        }
         return cartMapper.toDto(cartRepository.findByCustomer(customer));
     }
 
@@ -58,7 +55,7 @@ public class CartService {
     }
 
     public Cart findById(Long id) {
-        return cartRepository.findById(id).orElse(null);
+        return cartRepository.findById(id).orElseThrow();
     }
 
     @Transactional

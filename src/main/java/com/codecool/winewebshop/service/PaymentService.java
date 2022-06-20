@@ -40,17 +40,11 @@ public class PaymentService {
 
     public PaymentDto findPaymentByCartId(Long cartId) {
         Cart cart = cartService.findById(cartId);
-        if(cart == null){
-            return null;
-        }
         return paymentMapper.toDto(paymentRepository.findByCart(cart));
     }
 
     public PaymentDto updatePayment(Long cartId, PaymentDto paymentDto) {
         Cart cart = cartService.findById(cartId);
-        if(cart == null){
-            return null;
-        }
         paymentMapper.updatePaymentFromDto(paymentDto, cart.getPayment());
         return paymentMapper.toDto(paymentRepository.save(cart.getPayment()));
     }

@@ -27,14 +27,11 @@ public class ProductService {
     }
 
     public ProductDto findProductById(Long id) {
-        return productMapper.toDto(productRepository.findById(id).orElse(null));
+        return productMapper.toDto(productRepository.findById(id).orElseThrow());
     }
 
     public List<ProductDto> getProductByCategoryId(Long categoryId) {
         Category category = categoryService.findById(categoryId);
-        if (category == null) {
-            return null;
-        }
         return productMapper.toDto(productRepository.findByCategory(category));
     }
 
@@ -44,10 +41,7 @@ public class ProductService {
     }
 
     public ProductDto updateProduct(Long id, ProductDto productDto) {
-        Product product = productRepository.findById(id).orElse(null);
-        if (product == null) {
-            return null;
-        }
+        Product product = productRepository.findById(id).orElseThrow();
         productMapper.updateProductFromDto(productDto, product);
         return productMapper.toDto(productRepository.save(product));
     }

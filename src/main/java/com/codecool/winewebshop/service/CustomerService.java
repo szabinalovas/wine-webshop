@@ -24,24 +24,20 @@ public class CustomerService {
     }
 
     public CustomerDto findCustomerDtoById(Long id) {
-        return customerMapper.toDto(customerRepository.findById(id).orElse(null));
+        return customerMapper.toDto(customerRepository.findById(id).orElseThrow());
     }
 
     public Customer findCustomerById(Long customerId) {
-        return customerRepository.findById(customerId).orElse(null);
+        return customerRepository.findById(customerId).orElseThrow();
     }
 
     public CustomerDto addCustomer(CustomerDto customerDto) {
         Customer customer = customerMapper.toEntity(customerDto);
-
         return customerMapper.toDto(customerRepository.save(customer));
     }
 
     public CustomerDto updateCustomer(Long id, CustomerDto customerDto) {
         Customer customer = findCustomerById(id);
-        if (customer == null) {
-            return null;
-        }
         customerMapper.updateCustomerFromDto(customerDto, customer);
         return customerMapper.toDto(customerRepository.save(customer));
     }
