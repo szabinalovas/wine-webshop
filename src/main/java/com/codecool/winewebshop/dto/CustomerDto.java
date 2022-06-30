@@ -18,14 +18,17 @@ public class CustomerDto {
     private Long id;
     @NotBlank
     @NotEmpty
-    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "Invalid name!")
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "Name only contains letters and ' or . or - characters")
     private String customerName;
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "Country name only contains letters and ' or . or - characters")
     private String country;
+    @NotEmpty
     private String postalCode;
-    @Pattern(regexp = "^\\p{Lu}\\p{L}*(?:[\\s-]\\p{Lu}\\p{L}*)*$", message = "Invalid city name")
+    @Pattern(regexp = "^\\p{Lu}\\p{L}*(?:[\\s-]\\p{Lu}\\p{L}*)*$", message = "City name only contains letters")
     private String city;
+    @NotBlank
     private String address;
-    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$", message = "Invalid phone number format!")
+    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$", message = "Phone number format must be: (###) ###-####")
     private String phone;
     @Email
     private String email;

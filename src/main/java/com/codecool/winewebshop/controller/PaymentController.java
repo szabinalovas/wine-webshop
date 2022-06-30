@@ -2,6 +2,7 @@ package com.codecool.winewebshop.controller;
 
 import com.codecool.winewebshop.dto.PaymentDto;
 import com.codecool.winewebshop.service.PaymentService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class PaymentController {
     }
 
     @PostMapping("/{cart_id}")
+    @Operation(summary = "Add payment to cart")
     public ResponseEntity<PaymentDto> addPayment(@PathVariable("cart_id") Long cartId,
                                                  @Valid @RequestBody PaymentDto paymentDto,
                                                  BindingResult bindingResult) {
@@ -31,10 +33,12 @@ public class PaymentController {
             log.error("Cart with id: " + cartId + " not found.");
             return ResponseEntity.badRequest().build();
         }
+        log.info("Payment added to cart");
         return new ResponseEntity<>(paymentService.addPayment(cartId, paymentDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/status/{cart_id}")
+    @Operation(summary = "Get carts payment status")
     public ResponseEntity<PaymentDto> findPaymentByCartId(@PathVariable("cart_id") Long cartId) {
         PaymentDto payment;
         try {
@@ -48,6 +52,7 @@ public class PaymentController {
     }
 
     @PutMapping("/{cart_id}")
+    @Operation(summary = "Update payment by cart id")
     public ResponseEntity<PaymentDto> updatePayment(@PathVariable("cart_id") Long cartId,
                                                     @Valid @RequestBody PaymentDto paymentDto,
                                                     BindingResult bindingResult) {
@@ -63,11 +68,12 @@ public class PaymentController {
             log.error("Cart with id: " + cartId + " not found.");
             return ResponseEntity.notFound().build();
         }
-
+        log.info("Payment updated");
         return ResponseEntity.ok(payment);
     }
 
     @DeleteMapping("/{cart_id}")
+    @Operation(summary = "Delete payment by cart id")
     public ResponseEntity<Void> deletePaymentById(@PathVariable("cart_id") Long cartId) {
         try {
             paymentService.deletePaymentByCartId(cartId);

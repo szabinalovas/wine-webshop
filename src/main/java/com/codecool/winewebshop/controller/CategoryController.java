@@ -2,6 +2,7 @@ package com.codecool.winewebshop.controller;
 
 import com.codecool.winewebshop.dto.CategoryDto;
 import com.codecool.winewebshop.service.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -25,21 +26,25 @@ public class CategoryController {
     }
 
     @PostMapping
+    @Operation(summary = "Add new wine category")
     public ResponseEntity<CategoryDto> addCategory(@Valid @RequestBody CategoryDto categoryDto,
                                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.error(bindingResult.getFieldErrors().toString());
             return ResponseEntity.badRequest().build();
         }
+        log.info("Category added");
         return new ResponseEntity<>(categoryService.addCategory(categoryDto), HttpStatus.CREATED);
     }
 
     @GetMapping
+    @Operation(summary = "Get all category")
     public List<CategoryDto> findAllCategory() {
         return categoryService.findAllCategory();
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get category by id")
     public ResponseEntity<CategoryDto> findCategoryById(@PathVariable("id") Long id) {
         CategoryDto category;
         try {
@@ -53,6 +58,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update an existing category")
     public ResponseEntity<CategoryDto> updateCategory(@PathVariable("id") Long id,
                                                       @Valid @RequestBody CategoryDto categoryDto,
                                                       BindingResult bindingResult) {
@@ -68,11 +74,12 @@ public class CategoryController {
             log.error("Category with id: " + id + " not found.");
             return ResponseEntity.notFound().build();
         }
-
+        log.info("Category updated");
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete an existing category")
     public ResponseEntity<Void> deleteCategoryById(@PathVariable("id") Long id) {
         try {
             categoryService.deleteCategoryById(id);
