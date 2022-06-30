@@ -50,4 +50,9 @@ public class ProductService {
     public void deleteProductById(Long id) {
         productRepository.deleteById(id);
     }
+
+    @Transactional
+    public void decreaseStock(Product product) {
+        product.setQuantityInStock(product.getQuantityInStock() - 1);
+    }
 }

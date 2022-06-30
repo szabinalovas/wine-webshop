@@ -2,14 +2,13 @@ package com.codecool.winewebshop.entity;
 
 import com.codecool.winewebshop.entity.paymentEnums.PaymentStatus;
 import com.codecool.winewebshop.entity.paymentEnums.PaymentType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

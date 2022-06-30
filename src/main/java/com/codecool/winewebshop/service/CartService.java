@@ -32,11 +32,11 @@ public class CartService {
         this.productMapper = productMapper;
     }
 
+    @Transactional
     public CartDto addToCart(Long customerId, Long productId) {
         Customer customer = customerService.findCustomerById(customerId);
         Cart cart = customer.getCart() == null ? new Cart() : customer.getCart();
         Product product = productMapper.toEntity(productService.findProductById(productId));
-        product.setQuantityInStock(product.getQuantityInStock() - 1);
         cart.setCustomer(customer);
         List<Product> products;
         if (cart.getProducts() != null && !cart.getProducts().isEmpty()) {
@@ -46,6 +46,7 @@ public class CartService {
         }
         products.add(product);
         cart.setProducts(products);
+        productService.decreaseStock(product);
         cart.setTotal(cart.getTotal() + product.getPrice());
         return cartMapper.toDto(cartRepository.save(cart));
     }

@@ -4,15 +4,14 @@ import com.codecool.winewebshop.entity.paymentEnums.EnumNamePattern;
 import com.codecool.winewebshop.entity.paymentEnums.PaymentStatus;
 import com.codecool.winewebshop.entity.paymentEnums.PaymentType;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
