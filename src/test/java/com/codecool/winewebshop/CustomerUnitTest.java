@@ -10,12 +10,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -42,7 +42,7 @@ public class CustomerUnitTest {
         customer1.setPhone("(414) 3416616");
         customer1.setEmail("dbrickner0@vk.com");
 
-        customer2.setId(1L);
+        customer2.setId(2L);
         customer2.setCustomerName("Margalo Dunstan");
         customer2.setCountry("China");
         customer2.setPostalCode("82334");
@@ -64,15 +64,15 @@ public class CustomerUnitTest {
     public void findById_shouldReturnOneCustomer() {
         when(customerService.findCustomerDtoById(1L)).thenReturn(customer1);
         ResponseEntity<CustomerDto> responseEntity = customerController.findCustomerById(1L);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
-        assertThat(responseEntity.getBody()).isEqualTo(customer1);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(customer1, responseEntity.getBody());
     }
 
     @Test
     public void findOneByWrongId_shouldRespond404() {
         when(customerService.findCustomerDtoById(3L)).thenThrow(NoSuchElementException.class);
         ResponseEntity<CustomerDto> responseEntity = customerController.findCustomerById(3L);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(404);
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
     }
 
 
@@ -80,6 +80,6 @@ public class CustomerUnitTest {
     public void deleteCustomer() {
         Mockito.doNothing().when(customerService).deleteCustomerById(1L);
         ResponseEntity<Void> responseEntity = customerController.deleteCustomerById(1L);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(204);
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }
 }

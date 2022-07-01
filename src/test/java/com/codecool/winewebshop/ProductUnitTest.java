@@ -11,12 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -70,15 +70,15 @@ public class ProductUnitTest {
     public void findById_shouldReturnOneProduct() {
         when(productService.findProductById(1L)).thenReturn(product1);
         ResponseEntity<ProductDto> responseEntity = productController.findProductById(1L);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
-        assertThat(responseEntity.getBody()).isEqualTo(product1);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(product1, responseEntity.getBody());
     }
 
     @Test
     public void findOneByWrongId_shouldRespond404() {
         when(productService.findProductById(3L)).thenThrow(NoSuchElementException.class);
         ResponseEntity<ProductDto> responseEntity = productController.findProductById(3L);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(404);
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
     }
 
 
@@ -86,7 +86,7 @@ public class ProductUnitTest {
     public void deleteProduct() {
         Mockito.doNothing().when(productService).deleteProductById(1L);
         ResponseEntity<Void> responseEntity = productController.deleteProductById(1L);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(204);
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }
 
 }

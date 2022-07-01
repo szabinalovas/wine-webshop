@@ -33,8 +33,15 @@ public class PaymentController {
             log.error("Cart with id: " + cartId + " not found.");
             return ResponseEntity.badRequest().build();
         }
+
+        PaymentDto paymentDto1;
+        try {
+            paymentDto1 = paymentService.addPayment(cartId, paymentDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
         log.info("Payment added to cart");
-        return new ResponseEntity<>(paymentService.addPayment(cartId, paymentDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(paymentDto1, HttpStatus.CREATED);
     }
 
     @GetMapping("/status/{cart_id}")

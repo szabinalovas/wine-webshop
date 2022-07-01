@@ -32,7 +32,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get all customer")
+    @Operation(summary = "Get customer by id")
     public ResponseEntity<CustomerDto> findCustomerById(@PathVariable("id") Long id) {
         CustomerDto customerDto;
         try {

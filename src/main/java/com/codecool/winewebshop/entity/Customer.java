@@ -1,6 +1,9 @@
 package com.codecool.winewebshop.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -26,10 +29,10 @@ public class Customer {
     @Pattern(regexp = "^\\p{Lu}\\p{L}*(?:[\\s-]\\p{Lu}\\p{L}*)*$", message = "Invalid city name")
     private String city;
     private String address;
-    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$", message = "Invalid phone number format!")
-    private String phone;
     @Email
     private String email;
+    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$", message = "Invalid phone number format!")
+    private String phone;
     @OneToOne(mappedBy = "customer")
     private Cart cart;
 

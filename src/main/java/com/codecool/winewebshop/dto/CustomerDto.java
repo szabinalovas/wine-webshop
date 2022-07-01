@@ -1,7 +1,10 @@
 package com.codecool.winewebshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -28,8 +31,9 @@ public class CustomerDto {
     private String city;
     @NotBlank
     private String address;
-    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$", message = "Phone number format must be: (###) ###-####")
-    private String phone;
     @Email
     private String email;
+    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$", message = "Phone number format must be: (###) ###-####")
+    private String phone;
+
 }

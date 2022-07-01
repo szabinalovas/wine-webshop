@@ -65,7 +65,7 @@ public class ProductController {
             return ResponseEntity.badRequest().build();
         }
         log.info("Product added");
-        return ResponseEntity.ok(productService.addProduct(productDto));
+        return new ResponseEntity<>(productService.addProduct(productDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

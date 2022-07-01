@@ -10,12 +10,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -51,23 +51,21 @@ public class CategoryUnitTest {
     public void findById_shouldReturnOneCategory() {
         when(categoryService.findCategoryById(1L)).thenReturn(category1);
         ResponseEntity<CategoryDto> responseEntity = categoryController.findCategoryById(1L);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(200);
-        assertThat(responseEntity.getBody()).isEqualTo(category1);
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(category1, responseEntity.getBody());
     }
 
     @Test
     public void findOneByWrongId_shouldRespond404() {
         when(categoryService.findCategoryById(3L)).thenThrow(NoSuchElementException.class);
         ResponseEntity<CategoryDto> responseEntity = categoryController.findCategoryById(3L);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(404);
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
     }
-
 
     @Test
-    public void deleteCategory() {
+    public void deleteCategory_shouldRespond204() {
         Mockito.doNothing().when(categoryService).deleteCategoryById(1L);
         ResponseEntity<Void> responseEntity = categoryController.deleteCategoryById(1L);
-        assertThat(responseEntity.getStatusCodeValue()).isEqualTo(204);
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }
-
 }

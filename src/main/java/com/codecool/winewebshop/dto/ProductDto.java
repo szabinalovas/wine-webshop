@@ -1,13 +1,16 @@
 package com.codecool.winewebshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -26,9 +29,9 @@ public class ProductDto {
     private String productDescription;
     @Range(max = 50000)
     private Integer price;
-    @NotEmpty
+    @NotNull
     private Integer quantityInStock;
-    @NotBlank
+    @NotNull
     private CategoryDto category;
 
 }
