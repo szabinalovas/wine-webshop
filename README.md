@@ -28,7 +28,7 @@ Az alkalmazás unit és integrációs tesztjei a /wine-webshop könyvtárban kia
 $ mvn test
 ```
 
-### API Docs
+## API Docs
 Swagger API dokumentáció:
 ```sh
 http://localhost:8080/swagger-ui.html
