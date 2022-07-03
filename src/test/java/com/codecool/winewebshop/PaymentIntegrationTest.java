@@ -97,10 +97,9 @@ public class PaymentIntegrationTest {
         assertEquals(HttpStatus.BAD_REQUEST, updateEntity.getStatusCode());
     }
 
-
     private void postPayment(PaymentDto paymentDto) {
         final HttpEntity<PaymentDto> httpEntity = createPaymentHttpEntity(paymentDto);
-        ResponseEntity<PaymentDto> responseEntity = restTemplate.postForEntity(paymentUrl + "/1", httpEntity, PaymentDto.class);
+        restTemplate.postForEntity(paymentUrl + "/1", httpEntity, PaymentDto.class);
     }
 
     private HttpEntity<PaymentDto> createPaymentHttpEntity(PaymentDto paymentDto) {

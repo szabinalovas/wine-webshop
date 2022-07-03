@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,7 +68,7 @@ public class CartController {
     public ResponseEntity<Void> deleteByCustomer(@PathVariable("customer_id") Long customerId) {
         try {
             cartService.deleteByCustomer(customerId);
-        } catch (EmptyResultDataAccessException e) {
+        } catch (Exception e) {
             log.error("Customer cart with id: " + customerId + " not found.");
             return ResponseEntity.notFound().build();
         }

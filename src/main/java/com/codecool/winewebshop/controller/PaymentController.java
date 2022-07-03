@@ -37,7 +37,7 @@ public class PaymentController {
         PaymentDto paymentDto1;
         try {
             paymentDto1 = paymentService.addPayment(cartId, paymentDto);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
         log.info("Payment added to cart");
@@ -84,7 +84,7 @@ public class PaymentController {
     public ResponseEntity<Void> deletePaymentById(@PathVariable("cart_id") Long cartId) {
         try {
             paymentService.deletePaymentByCartId(cartId);
-        } catch (EmptyResultDataAccessException e) {
+        } catch (Exception e) {
             log.error("Payment with id: " + cartId + " not found.");
             return ResponseEntity.notFound().build();
         }
